@@ -1,26 +1,27 @@
 // The array of ingredients the user can add to a sandwich
+const ingredientList = {
 //  This will be updated after we fetch.
-let ingredients = [];
+    ingredients: [],
 
 // Updates the DOM to display a list of ingredients
-function renderIngredientList() {
-    const ingredientUl = document.querySelector('.ingredient-list');
+    render() {
+        const ingredientUl = document.querySelector('.ingredient-list');
 
     // Empty the ingredientList before adding any content to it.
     ingredientUl.innerHTML = '';
 
-    ingredients.forEach(ingredient => {
-        const ingredientDiv = renderIngredientCard(ingredient);
+    this.ingredients.forEach(ingredient => {
+        const ingredientDiv = this.createIngredientCard(ingredient);
         ingredientUl.append(ingredientDiv)
     })
-}
+},
 
 // Creates a DIV to display a single ingredient
-function renderIngredientCard(ingredient) {
-    const ingredientCard = document.createElement('div');
-    ingredientCard.className = 'card'
+    createIngredientCard(ingredient) {
+        const ingredientCard = document.createElement('div');
+        ingredientCard.className = 'card'
 
-    const sandwichHasIngredient = selectedSandwich.ingredients.includes(ingredient.name);
+    const sandwichHasIngredient = cart.selectedSandwich.ingredients.includes(ingredient.name);
     ingredientCard.innerHTML = `
         <div class="card-body">
             <div class="row g-0">
@@ -42,22 +43,24 @@ function renderIngredientCard(ingredient) {
     `
     const toggleButton = ingredientCard.querySelector('.toggle-button')
     toggleButton.addEventListener('click', () => {
-        toggleIngredient(ingredient)
+        ingredientList.toggleIngredient(ingredient)
     })
 
     return ingredientCard
-}
+},
 
 // Runs when the user clicks 'Add' or 'Remove' on a ingredient card
-function toggleIngredient(ingredient) {
-    let sandwichHasIngredient = selectedSandwich.ingredients.includes(ingredient.name);
+    toggleIngredient(ingredient) {
+    let sandwichHasIngredient = cart.selectedSandwich.ingredients.includes(ingredient.name);
     if (sandwichHasIngredient) {
         selectedSandwich.ingredients = selectedSandwich.ingredients.filter(x => x !== ingredient.name)
     } else {
         sandwichHasIngredient = true;
-        selectedSandwich.ingredients.push(ingredient.name)
+        cart.selectedSandwich.ingredients.push(ingredient.name)
+
     }
     saveSelectedSandwich()
-    renderCart()
-    renderIngredientList()
+    cart.render()
+    ingredientList.renter()
+},
 }
